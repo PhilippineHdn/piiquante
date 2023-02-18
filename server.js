@@ -1,15 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const app = require('./app');
 
 mongoose.set('strictQuery', false)
 
-const app = express();
+
 const port = 3000;
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World my friends!')
-})
 
 const start = async () => {
     const result = await mongoose.connect('mongodb://127.0.0.1/philippine');
@@ -24,9 +20,7 @@ const start = async () => {
         _id: ObjectId
         });
         const MyModel = mongoose.model('informations', schemaTest);
-        MyModel.find({}, function (err, docs) {
-            console.log(docs)
-          });
+        const docs = await MyModel.find();
       })
 }
 
