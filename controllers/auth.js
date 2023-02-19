@@ -44,7 +44,6 @@ const login = async (req, res) => {
         const token = jwt.sign({
             userId : user._id
         }, 'RANDOM_TOKEN_SECRET')
-        console.log(token)
 
         res.status(200).json({ userId: user._id, token: token });
     } catch (error) {
