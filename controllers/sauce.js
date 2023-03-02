@@ -8,6 +8,16 @@ const getSauces = async (req, res) => {
     } catch (error) {
         res.status(401).json({ message: error.message});
     }
-}
+};
+
+const createSauce = async (req, res) => {
+    try {
+        console.log(req.file);
+        res.status(200).send('ok');
+    } catch (error) {
+        res.status(401).json({ message: error.message});
+    }
+};
 
 exports.getSauces = getSauces; 
+exports.createSauce = createSauce;
