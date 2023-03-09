@@ -6,6 +6,6 @@ const upload = require('../middleware/upload');
 
 router.get('/', checkToken, sauces.getSauces);
 
-router.post('/', upload, sauces.createSauce);
+router.post('/', checkToken, upload, sauces.createSauce);
 
 module.exports = router;
