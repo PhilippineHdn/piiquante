@@ -8,4 +8,8 @@ router.get('/', checkToken, sauces.getSauces);
 
 router.post('/', checkToken, upload, sauces.createSauce);
 
+router.get('/:id', checkToken, sauces.getOneSauce);
+
+router.delete('/:id', checkToken, sauces.deleteOneSauce);
+
 module.exports = router;
