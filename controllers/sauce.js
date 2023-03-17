@@ -33,7 +33,7 @@ const createSauce = async (req, res) => {
             heat: sauce.heat,
             });
         await sauceToSave.save()
-        res.status(200).send({message: 'saved'});
+        res.status(201).send({message: 'saved'});
     } catch (error) {
         res.status(500).json({ message: error.message});
     }
@@ -47,11 +47,11 @@ const getOneSauce = async (req, res) => {
         }
         const sauce = await Sauces.findById(id);
         if (!sauce) {
-            return res.status(400).json({ message: 'Cannot find sauce'});
+            return res.status(404).json({ message: 'Cannot find sauce'});
         }
-        res.status(200).send(sauce);
+        return res.status(200).send(sauce);
     } catch (error) {
-        res.status(401).json({ message: error.message});
+        return res.status(500).json({ message: error?.message});
     }
 }
 
@@ -61,13 +61,37 @@ const deleteOneSauce = async (req, res) => {
         if (!id || !ObjectId.isValid(id)) {
             return res.status(400).json({ message: 'Sauce ID is incorrect'});
         }
-        const deletedSauce = await Sauces.deleteOne({ _id: id, userId: String(req.user._id)});
-        if(deletedSauce.deletedCount === 0) {
+        const deletedSauce = await Sauces.deleteOne({ _id: id, userId: String(req.user?._id)});
+        if (deletedSauce.deletedCount === 0) {
             return res.status(400).json({ message: 'Failed to delete sauce'});
         }
-        res.status(200).send({message: "Sauce deleted"});
+        return res.status(200).send({message: "Sauce deleted"});
     } catch (error) {
-        res.status(401).json({ message: error.message});
+        return res.status(500).json({ message: error?.message});
+    }
+}
+
+const updateOneSauce = async (req, res) => {
+    try {
+        const sauce = await Sauces.findById(req.params.id);
+        const sauceCreator = sauce.userId;
+        
+        if (String(req.user._id) !== sauceCreator) {
+            return res.status(403).json({ message: 'You\'re not allowed'});
+        }
+
+        const sauceObject = req.file
+            ? {
+                ...JSON.parse(req.body.sauce),
+                imageUrl: `http://localhost:3000/${req.file.path}`,
+            }
+            : req.body;
+
+        await Sauces.updateOne({ _id: req.params.id }, sauceObject)
+
+        return res.status(200).json({ message: "Sauce updated" })
+    } catch (error) {
+        return res.status(500).json({ message: error?.message});
     }
 }
 
@@ -75,3 +99,4 @@ exports.getSauces = getSauces;
 exports.createSauce = createSauce;
 exports.getOneSauce = getOneSauce;
 exports.deleteOneSauce = deleteOneSauce;
+exports.updateOneSauce = updateOneSauce;

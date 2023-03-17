@@ -12,4 +12,6 @@ router.get('/:id', checkToken, sauces.getOneSauce);
 
 router.delete('/:id', checkToken, sauces.deleteOneSauce);
 
+router.put('/:id', checkToken, upload, sauces.updateOneSauce);
+
 module.exports = router;
