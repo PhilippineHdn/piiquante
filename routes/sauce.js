@@ -14,4 +14,6 @@ router.delete('/:id', checkToken, sauces.deleteOneSauce);
 
 router.put('/:id', checkToken, upload, sauces.updateOneSauce);
 
+router.post('/:id/like', checkToken, sauces.likeOrDislikeOneSauce);
+
 module.exports = router;

@@ -95,8 +95,58 @@ const updateOneSauce = async (req, res) => {
     }
 }
 
+const likeOrDislikeOneSauce = async (req, res) => {
+    try {
+        const sauce = await Sauces.findById(req.params.id);
+        if(!sauce) {
+            return res.status(404).json({ message: error?.message});
+        }
+        if (sauce.usersLiked.find(userLikedId => userLikedId === req.body.userId)) {
+            await Sauces.updateOne(
+                { _id: req.params.id },
+                {
+                  $inc: { likes: -1 },
+                  $pull: { usersLiked: req.body.userId },
+                })
+        }
+
+        if (sauce.usersDisliked.find(userDislikedId => userDislikedId === req.body.userId)) {
+            await Sauces.updateOne(
+                { _id: req.params.id },
+                {
+                  $inc: { dislikes: -1 },
+                  $pull: { usersDisliked: req.body.userId },
+                })
+        }
+        if (req.body.like === 1) {
+            await Sauces.updateOne(
+              { _id: req.params.id },
+              {
+                $inc: { likes: 1 },
+                $push: { usersLiked: req.body.userId },
+              }
+            )
+            return res.status(200).json({ message: "+1 like !" })
+        }
+        if (req.body.like === -1) {
+            await Sauces.updateOne(
+              { _id: req.params.id },
+              {
+                $inc: { dislikes: 1 },
+                $push: { usersDisliked: req.body.userId },
+              }
+            )
+            return res.status(200).json({ message: "+1 dislike !" })
+        }
+        return res.status(200).json({ message: "Like or Dislike removed !" })
+    } catch (error) {
+        return res.status(500).json({ message: error?.message});
+    }
+}
+
 exports.getSauces = getSauces; 
 exports.createSauce = createSauce;
 exports.getOneSauce = getOneSauce;
 exports.deleteOneSauce = deleteOneSauce;
 exports.updateOneSauce = updateOneSauce;
+exports.likeOrDislikeOneSauce = likeOrDislikeOneSauce;
