@@ -44,7 +44,6 @@ const login = async (req, res) => {
         userId : user._id
     }, 'RANDOM_TOKEN_SECRET')
 
-    // regarder si userId est vraiment nécessaire car déjà dans le token
     return res.status(200).json({ userId: user._id, token });
 }
 

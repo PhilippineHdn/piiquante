@@ -1,17 +1,16 @@
 const multer = require('multer');
-//faire une fonction fléchée
+
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: (req, file, cb) => {
         cb(null, './uploads');
     },
-    filename: function (req, file, cb) {
+    filename: (req, file, cb) => {
         cb(null, Date.now() + "--" + file.originalname);
     }
 });
 
 const fileFilter = (req, file, cb) => {
     if(['jpeg','jpg','png'].find(ext => file.mimetype.includes(ext))) {
-    //if((file.mimetype).includes('jpeg') || (file.mimetype).includes('png') || (file.mimetype).includes('jpg')){
         cb(null, true);
     } else{
         cb(null, false);

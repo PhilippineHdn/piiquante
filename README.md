@@ -13,6 +13,8 @@ server: NodeJS ;
 database: MongoDB; 
 All database operations use the Mongoose package with strict data schemas.
 
+To launch it, make sure you are using version 18 of node.js then run the "npm install" command and then launch the server with "npm run start".
+
 ###FR
 
 Projet en cours de réalisation durant ma formation de Développeur web au sein d'openclassrooms. 
@@ -25,3 +27,5 @@ framework : Express ;
 serveur : NodeJS ;
 base de données : MongoDB ; 
 Toutes les opérations de la base de donnéess utilisent le pack Mongoose avec des schémas de données stricts.
+
+Pour le lancer, veillez à utiliser la version 18 de node.js puis lancez la commande "npm install" puis lancer le serveur avec "npm run start".
