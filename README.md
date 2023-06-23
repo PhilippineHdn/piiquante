@@ -2,7 +2,7 @@
 
 ###EN 
 
-Project in progress during my web developer training at openclassrooms. 
+Project realized during my web developer training at openclassrooms. 
 
 It is the MVP of a hot sauce evaluation application.
 The front-end is provided and the back-end and the API are to be developed.
@@ -17,7 +17,7 @@ To launch it, make sure you are using version 18 of node.js then run the "npm in
 
 ###FR
 
-Projet en cours de réalisation durant ma formation de Développeur web au sein d'openclassrooms. 
+Projet réalisé durant ma formation de Développeur web au sein d'openclassrooms. 
 
 Il s'agit du MVP d'une application d'évaluation de sauces piquantes.
 La partie front-end est fournie et la partie back-end ainsi que l'API sont à développer.
